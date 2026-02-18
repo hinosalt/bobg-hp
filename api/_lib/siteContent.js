@@ -6,6 +6,11 @@ const ensureString = (value, label) => {
   assert(typeof value === 'string' && value.trim().length > 0, `${label} must be a non-empty string`);
 };
 
+const ensureAssetPath = (value, label) => {
+  ensureString(value, label);
+  assert(!value.trim().startsWith('soruce/'), `${label} has invalid prefix "soruce/" (did you mean "source/"?)`);
+};
+
 const ensureArray = (value, expectedLength, label) => {
   assert(Array.isArray(value), `${label} must be an array`);
   assert(value.length === expectedLength, `${label} must have length ${expectedLength}`);
@@ -22,22 +27,22 @@ export const validateSiteContentPayload = (content) => {
     ensureArray(localeContent.texts, 94, `locales.${locale}.texts`);
     ensureArray(localeContent.images, 40, `locales.${locale}.images`);
     localeContent.texts.forEach((value, idx) => ensureString(value, `locales.${locale}.texts[${idx}]`));
-    localeContent.images.forEach((value, idx) => ensureString(value, `locales.${locale}.images[${idx}]`));
+    localeContent.images.forEach((value, idx) => ensureAssetPath(value, `locales.${locale}.images[${idx}]`));
 
-    ensureString(localeContent.brandLogo, `locales.${locale}.brandLogo`);
+    ensureAssetPath(localeContent.brandLogo, `locales.${locale}.brandLogo`);
     ensureString(localeContent.newsAllHref, `locales.${locale}.newsAllHref`);
 
     ensureArray(localeContent.newsItems, 3, `locales.${locale}.newsItems`);
     localeContent.newsItems.forEach((item, idx) => {
       ensureString(item?.href, `locales.${locale}.newsItems[${idx}].href`);
-      ensureString(item?.image, `locales.${locale}.newsItems[${idx}].image`);
+      ensureAssetPath(item?.image, `locales.${locale}.newsItems[${idx}].image`);
     });
 
     ensureArray(localeContent.coreMemberImages, 5, `locales.${locale}.coreMemberImages`);
-    localeContent.coreMemberImages.forEach((value, idx) => ensureString(value, `locales.${locale}.coreMemberImages[${idx}]`));
+    localeContent.coreMemberImages.forEach((value, idx) => ensureAssetPath(value, `locales.${locale}.coreMemberImages[${idx}]`));
 
     ensureArray(localeContent.advisorImages, 6, `locales.${locale}.advisorImages`);
-    localeContent.advisorImages.forEach((value, idx) => ensureString(value, `locales.${locale}.advisorImages[${idx}]`));
+    localeContent.advisorImages.forEach((value, idx) => ensureAssetPath(value, `locales.${locale}.advisorImages[${idx}]`));
   });
 
   assert(content.inquiry && typeof content.inquiry === 'object', 'inquiry section must exist');

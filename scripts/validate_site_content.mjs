@@ -19,6 +19,13 @@ const assertNonEmptyString = (value, label) => {
   }
 };
 
+const assertValidAssetPath = (value, label) => {
+  assertNonEmptyString(value, label);
+  if (value.trim().startsWith('soruce/')) {
+    fail(`${label} has invalid prefix "soruce/" (did you mean "source/"?)`);
+  }
+};
+
 const assertArrayLength = (value, expected, label) => {
   if (!Array.isArray(value) || value.length !== expected) {
     fail(`${label} must be an array with length=${expected}`);
@@ -30,22 +37,27 @@ const assertStringArray = (value, expected, label) => {
   value.forEach((item, idx) => assertNonEmptyString(item, `${label}[${idx}]`));
 };
 
+const assertAssetArray = (value, expected, label) => {
+  assertArrayLength(value, expected, label);
+  value.forEach((item, idx) => assertValidAssetPath(item, `${label}[${idx}]`));
+};
+
 const validateLocale = (localeContent, locale) => {
   if (!localeContent || typeof localeContent !== 'object') {
     fail(`locales.${locale} is missing`);
   }
 
   assertStringArray(localeContent.texts, 94, `locales.${locale}.texts`);
-  assertStringArray(localeContent.images, 40, `locales.${locale}.images`);
-  assertNonEmptyString(localeContent.brandLogo, `locales.${locale}.brandLogo`);
+  assertAssetArray(localeContent.images, 40, `locales.${locale}.images`);
+  assertValidAssetPath(localeContent.brandLogo, `locales.${locale}.brandLogo`);
   assertNonEmptyString(localeContent.newsAllHref, `locales.${locale}.newsAllHref`);
-  assertStringArray(localeContent.coreMemberImages, 5, `locales.${locale}.coreMemberImages`);
-  assertStringArray(localeContent.advisorImages, 6, `locales.${locale}.advisorImages`);
+  assertAssetArray(localeContent.coreMemberImages, 5, `locales.${locale}.coreMemberImages`);
+  assertAssetArray(localeContent.advisorImages, 6, `locales.${locale}.advisorImages`);
 
   assertArrayLength(localeContent.newsItems, 3, `locales.${locale}.newsItems`);
   localeContent.newsItems.forEach((item, idx) => {
     assertNonEmptyString(item?.href, `locales.${locale}.newsItems[${idx}].href`);
-    assertNonEmptyString(item?.image, `locales.${locale}.newsItems[${idx}].image`);
+    assertValidAssetPath(item?.image, `locales.${locale}.newsItems[${idx}].image`);
   });
 };
 

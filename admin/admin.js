@@ -130,13 +130,23 @@ const makeImageRow = ({
 
   const refresh = () => {
     const value = getValue() || '';
+    const normalized = value
+      .replace(/^\.\/+/, '')
+      .replace(/^\.\.\/+/, '')
+      .replace(/^soruce\//, 'source/');
     valueInput.value = value;
-    if (value.startsWith('http://') || value.startsWith('https://')) {
+    if (value.startsWith('soruce/')) {
+      imagePreview.removeAttribute('src');
+      caption.textContent = 'パスに誤字があります: "soruce/" ではなく "source/" です。';
+    } else if (value.startsWith('http://') || value.startsWith('https://')) {
       imagePreview.src = value;
       caption.textContent = '';
-    } else if (value.startsWith('source/')) {
-      imagePreview.removeAttribute('src');
-      caption.textContent = 'ドラフトブランチ保存時に反映されます。';
+    } else if (normalized.startsWith('source/') || normalized.startsWith('content/')) {
+      imagePreview.src = `/${normalized}`;
+      caption.textContent = 'ローカルパスのプレビューです。';
+    } else if (value.startsWith('/')) {
+      imagePreview.src = value;
+      caption.textContent = '';
     } else {
       imagePreview.removeAttribute('src');
       caption.textContent = '';

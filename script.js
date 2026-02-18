@@ -514,7 +514,20 @@ const TEXT_OVERRIDES = {
   },
 };
 
-const resolveAssetUrl = (base, url) => {
+const normalizeAssetPath = (rawUrl) => {
+  const url = String(rawUrl || '').trim();
+  if (!url) return '';
+  if (url.startsWith('soruce/')) {
+    return `source/${url.slice('soruce/'.length)}`;
+  }
+  if (url.startsWith('./')) return url.slice(2);
+  if (url.startsWith('../')) return url.slice(3);
+  return url;
+};
+
+const resolveAssetUrl = (base, rawUrl) => {
+  const url = normalizeAssetPath(rawUrl);
+  if (!url) return '';
   if (url.startsWith('/')) return url;
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   if (url.startsWith('source/') || url.startsWith('content/') || url.startsWith('api/')) {
