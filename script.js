@@ -175,6 +175,11 @@ const INQUIRY_COPY_BY_LOCALE = {
   },
 };
 
+let runtimeHeroMetricsByLocale = HERO_METRICS_BY_LOCALE;
+let runtimeMaterialModalTextByLocale = MATERIAL_MODAL_TEXT_BY_LOCALE;
+let runtimeInquiryCopyByLocale = INQUIRY_COPY_BY_LOCALE;
+let runtimeInquiryEndpoint = INQUIRY_ENDPOINT;
+
 const normalizeValue = (value) => value.trim();
 
 const setFormSubmitting = (form, isSubmitting) => {
@@ -185,7 +190,7 @@ const setFormSubmitting = (form, isSubmitting) => {
 };
 
 const sendInquiryMail = async (payload) => {
-  const response = await fetch(INQUIRY_ENDPOINT, {
+  const response = await fetch(runtimeInquiryEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -238,7 +243,11 @@ const setupContactForm = (locale) => {
   const form = document.querySelector('.contact-form');
   if (!form) return;
 
-  const localeCopy = INQUIRY_COPY_BY_LOCALE[locale] || INQUIRY_COPY_BY_LOCALE.ja;
+  const localeCopy =
+    runtimeInquiryCopyByLocale[locale]
+    || runtimeInquiryCopyByLocale.ja
+    || INQUIRY_COPY_BY_LOCALE[locale]
+    || INQUIRY_COPY_BY_LOCALE.ja;
   const inputCompany = byId('contactInputCompany');
   const inputName = byId('contactInputName');
   const inputMail = byId('contactInputMail');
@@ -278,8 +287,16 @@ const setupMaterialModal = (locale, trigger) => {
   const modal = byId('materialModal');
   if (!modal || !trigger) return;
 
-  const localeCopy = MATERIAL_MODAL_TEXT_BY_LOCALE[locale] || MATERIAL_MODAL_TEXT_BY_LOCALE.ja;
-  const inquiryCopy = INQUIRY_COPY_BY_LOCALE[locale] || INQUIRY_COPY_BY_LOCALE.ja;
+  const localeCopy =
+    runtimeMaterialModalTextByLocale[locale]
+    || runtimeMaterialModalTextByLocale.ja
+    || MATERIAL_MODAL_TEXT_BY_LOCALE[locale]
+    || MATERIAL_MODAL_TEXT_BY_LOCALE.ja;
+  const inquiryCopy =
+    runtimeInquiryCopyByLocale[locale]
+    || runtimeInquiryCopyByLocale.ja
+    || INQUIRY_COPY_BY_LOCALE[locale]
+    || INQUIRY_COPY_BY_LOCALE.ja;
   setText('materialModalLead', localeCopy.lead);
   setText('materialModalLabelName', localeCopy.labelName);
   setText('materialModalLabelMail', localeCopy.labelMail);
@@ -502,6 +519,61 @@ const resolveAssetUrl = (base, url) => {
   return `${base}${url}`;
 };
 
+const hasOwn = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
+
+const valueFromIndexMap = (map, index, fallback) => {
+  if (!map || typeof map !== 'object') return fallback;
+  if (hasOwn(map, index)) return map[index];
+  const key = String(index);
+  if (hasOwn(map, key)) return map[key];
+  return fallback;
+};
+
+const applyIndexMap = (list, map) => list.map((item, idx) => valueFromIndexMap(map, idx + 1, item));
+
+const normalizeLocaleContent = (locale, baseTexts, baseImages, siteContent) => {
+  const localeAssets = SOURCE_ASSETS_BY_LOCALE[locale] || SOURCE_ASSETS_BY_LOCALE.ja;
+  const textOverrides = TEXT_OVERRIDES[locale] || {};
+  const defaultTexts = applyIndexMap(baseTexts, textOverrides);
+  const defaultImages = applyIndexMap(baseImages, localeAssets.imageOverrides || {});
+
+  const contentLocale = siteContent?.locales?.[locale];
+  const texts =
+    Array.isArray(contentLocale?.texts) && contentLocale.texts.length === baseTexts.length
+      ? contentLocale.texts
+      : defaultTexts;
+
+  const images =
+    Array.isArray(contentLocale?.images) && contentLocale.images.length === baseImages.length
+      ? contentLocale.images
+      : defaultImages;
+
+  const newsItems =
+    Array.isArray(contentLocale?.newsItems) && contentLocale.newsItems.length === 3
+      ? contentLocale.newsItems
+      : localeAssets.newsItems;
+
+  const coreMemberImages =
+    Array.isArray(contentLocale?.coreMemberImages) && contentLocale.coreMemberImages.length === 5
+      ? contentLocale.coreMemberImages
+      : localeAssets.coreMemberImages;
+
+  const advisorImages =
+    Array.isArray(contentLocale?.advisorImages) && contentLocale.advisorImages.length === 6
+      ? contentLocale.advisorImages
+      : localeAssets.advisorImages;
+
+  return {
+    texts,
+    images,
+    brandLogo: contentLocale?.brandLogo || localeAssets.brandLogo,
+    newsAllHref: contentLocale?.newsAllHref || localeAssets.newsAllHref,
+    newsItems,
+    coreMemberImages,
+    advisorImages,
+  };
+};
+
 const missingIndices = (usedSet, total) => {
   const missing = [];
   for (let i = 1; i <= total; i += 1) {
@@ -510,18 +582,26 @@ const missingIndices = (usedSet, total) => {
   return missing;
 };
 
-const render = (texts, images, locale, base) => {
+const render = (baseTexts, baseImages, siteContent, locale, base) => {
+  runtimeHeroMetricsByLocale = siteContent?.heroMetricsByLocale || HERO_METRICS_BY_LOCALE;
+  runtimeMaterialModalTextByLocale =
+    siteContent?.materialModalTextByLocale || MATERIAL_MODAL_TEXT_BY_LOCALE;
+  runtimeInquiryCopyByLocale = siteContent?.inquiryCopyByLocale || INQUIRY_COPY_BY_LOCALE;
+  runtimeInquiryEndpoint = siteContent?.inquiry?.endpoint || INQUIRY_ENDPOINT;
+
+  const localeContent = normalizeLocaleContent(locale, baseTexts, baseImages, siteContent);
+  const texts = localeContent.texts;
+  const images = localeContent.images;
   const usedText = new Set();
   const usedImage = new Set();
-  const localeAssets = SOURCE_ASSETS_BY_LOCALE[locale] || SOURCE_ASSETS_BY_LOCALE.ja;
-  const textOverrides = TEXT_OVERRIDES[locale] || {};
+  const localeAssets = localeContent;
 
   const text = (idx) => texts[idx - 1] ?? '';
   const image = (idx) => images[idx - 1] ?? '';
 
   const useText = (idx) => {
     usedText.add(idx);
-    return textOverrides[idx] ?? text(idx);
+    return text(idx);
   };
 
   const useImage = (idx) => {
@@ -531,8 +611,7 @@ const render = (texts, images, locale, base) => {
 
   const useImageWithLocale = (idx) => {
     const original = useImage(idx);
-    const override = localeAssets.imageOverrides[idx];
-    return override ? resolveAssetUrl(base, override) : original;
+    return resolveAssetUrl(base, original);
   };
 
   setImage('brandLogo', resolveAssetUrl(base, localeAssets.brandLogo));
@@ -569,7 +648,11 @@ const render = (texts, images, locale, base) => {
   useImage(1);
   const heroMetrics = byId('heroMetrics');
   if (heroMetrics) {
-    const metricItems = HERO_METRICS_BY_LOCALE[locale] || HERO_METRICS_BY_LOCALE.ja;
+    const metricItems =
+      runtimeHeroMetricsByLocale[locale]
+      || runtimeHeroMetricsByLocale.ja
+      || HERO_METRICS_BY_LOCALE[locale]
+      || HERO_METRICS_BY_LOCALE.ja;
     metricItems.forEach((item) => {
       const metric = create('article', 'hero-metric');
       const value = create('p', 'hero-metric-value');
@@ -817,13 +900,28 @@ const boot = async () => {
   const base = body.dataset.base || '';
   const locale = body.dataset.locale || 'ja';
   const contentPath = body.dataset.contentPath || `${base}source/manifest/bobg-rendered-content.json`;
+  const siteContentPath = body.dataset.siteContentPath || `${base}content/site-content.json`;
 
-  const response = await fetch(contentPath, { cache: 'no-store' });
+  const [response, siteContentResponse] = await Promise.all([
+    fetch(contentPath, { cache: 'no-store' }),
+    fetch(siteContentPath, { cache: 'no-store' }).catch(() => null),
+  ]);
+
   const data = await response.json();
   const texts = data.textNodes.map((node) => node.text);
   const images = data.images.map((node) => node.url);
+  let siteContent = null;
 
-  render(texts, images, locale, base);
+  if (siteContentResponse && siteContentResponse.ok) {
+    try {
+      siteContent = await siteContentResponse.json();
+    } catch (error) {
+      console.warn('failed to parse site-content.json', error);
+      siteContent = null;
+    }
+  }
+
+  render(texts, images, siteContent, locale, base);
   setupNavToggle();
   attachRevealObserver();
   attachHeroMotion();

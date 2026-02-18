@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "build:manifest": "node scripts/build_manifest.mjs",
+    "build:site-content": "node scripts/build_site_content.mjs",
+    "validate:site-content": "node scripts/validate_site_content.mjs",
     "test:integrity": "node scripts/check_integrity.mjs",
     "test:e2e": "node scripts/test_e2e_smoke.mjs",
     "fast-check": "bash scripts/fast_check.sh",

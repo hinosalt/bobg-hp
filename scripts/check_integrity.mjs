@@ -9,6 +9,7 @@ const projectRoot = path.resolve(__dirname, "..");
 
 const manifestPath = path.join(projectRoot, "source", "manifest", "source-manifest.json");
 const renderedContentPath = path.join(projectRoot, "source", "manifest", "bobg-rendered-content.json");
+const siteContentPath = path.join(projectRoot, "content", "site-content.json");
 const rawDir = path.join(projectRoot, "source", "raw");
 
 const hashSha256 = (buffer) => createHash("sha256").update(buffer).digest("hex");
@@ -90,9 +91,9 @@ const ensurePageReferences = async () => {
   if (!script.includes("useText(94)")) fail("script.js missing terminal text index usage");
   if (!script.includes("idx <= 40")) fail("script.js missing terminal image index usage");
   if (!script.includes("missingIndices")) fail("script.js missing coverage guard");
-  if (!script.includes("SOURCE_ASSETS_BY_LOCALE")) fail("script.js missing locale asset map");
-  if (!script.includes("TEXT_OVERRIDES")) fail("script.js missing locale text override map");
-  if (!script.includes("source/quoted/en/before0.png")) fail("script.js missing EN quoted news image");
+  if (!script.includes("content/site-content.json")) fail("script.js missing site-content loader");
+  if (!jaHtml.includes("data-site-content-path")) fail("index.html missing site-content path");
+  if (!enHtml.includes("data-site-content-path")) fail("en/index.html missing site-content path");
 };
 
 const ensureRenderedContent = async () => {
@@ -119,6 +120,26 @@ const ensureRenderedContent = async () => {
   const invalidImage = content.images.findIndex((node) => typeof node?.url !== "string" || node.url.length === 0);
   if (invalidImage >= 0) {
     fail(`bobg-rendered-content.json has empty image url at index=${invalidImage + 1}`);
+  }
+};
+
+const ensureSiteContent = async () => {
+  const raw = await fs.readFile(siteContentPath, "utf8");
+  const siteContent = JSON.parse(raw);
+
+  if (typeof siteContent?.version !== "number") fail("site-content.json missing numeric version");
+  if (!siteContent?.locales?.ja || !siteContent?.locales?.en) fail("site-content.json missing locales");
+  if (!Array.isArray(siteContent.locales.ja.texts) || siteContent.locales.ja.texts.length !== 94) {
+    fail("site-content.json ja text count mismatch");
+  }
+  if (!Array.isArray(siteContent.locales.en.texts) || siteContent.locales.en.texts.length !== 94) {
+    fail("site-content.json en text count mismatch");
+  }
+  if (!Array.isArray(siteContent.locales.ja.images) || siteContent.locales.ja.images.length !== 40) {
+    fail("site-content.json ja image count mismatch");
+  }
+  if (!Array.isArray(siteContent.locales.en.images) || siteContent.locales.en.images.length !== 40) {
+    fail("site-content.json en image count mismatch");
   }
 };
 
@@ -157,6 +178,7 @@ const main = async () => {
 
   await ensurePageReferences();
   await ensureRenderedContent();
+  await ensureSiteContent();
   console.log("PASS: integrity checks completed");
 };
 

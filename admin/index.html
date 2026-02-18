@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOBG CMS</title>
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <h1>BOBG Content Manager</h1>
+      <p>画像・文字・URLを編集し、GitHub PRとして保存します。</p>
+    </header>
+
+    <section id="authPanel" class="panel">
+      <h2>Authentication</h2>
+      <p>編集には GitHub ログインが必要です。</p>
+      <a class="button primary" href="/api/auth/start">GitHub でログイン</a>
+    </section>
+
+    <section id="forbiddenPanel" class="panel" hidden>
+      <h2>Access denied</h2>
+      <p>このGitHubアカウントには編集権限がありません。</p>
+      <a class="button" href="/api/auth/logout">ログアウト</a>
+    </section>
+
+    <section id="editorApp" class="panel" hidden>
+      <div class="toolbar">
+        <p id="sessionInfo" class="session"></p>
+        <div class="actions">
+          <button id="reloadButton" class="button" type="button">再読込</button>
+          <button id="saveDraftButton" class="button primary" type="button">下書き保存 (PR作成)</button>
+          <a class="button" href="/api/auth/logout">ログアウト</a>
+        </div>
+      </div>
+      <p id="saveStatus" class="status"></p>
+      <div id="localeEditors" class="locale-grid"></div>
+    </section>
+  </main>
+
+  <script src="./admin.js" type="module"></script>
+</body>
+</html>

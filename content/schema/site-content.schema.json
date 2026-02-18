@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bobg.xyz/schema/site-content.schema.json",
+  "type": "object",
+  "required": [
+    "version",
+    "updatedAt",
+    "updatedBy",
+    "inquiry",
+    "heroMetricsByLocale",
+    "materialModalTextByLocale",
+    "inquiryCopyByLocale",
+    "locales"
+  ],
+  "properties": {
+    "version": { "type": "number" },
+    "updatedAt": { "type": "string" },
+    "updatedBy": { "type": "string" },
+    "inquiry": {
+      "type": "object",
+      "required": ["endpoint", "recipient"],
+      "properties": {
+        "endpoint": { "type": "string" },
+        "recipient": { "type": "string" }
+      }
+    },
+    "heroMetricsByLocale": {
+      "type": "object",
+      "required": ["ja", "en"],
+      "additionalProperties": false,
+      "properties": {
+        "ja": { "$ref": "#/$defs/metricList" },
+        "en": { "$ref": "#/$defs/metricList" }
+      }
+    },
+    "materialModalTextByLocale": {
+      "type": "object",
+      "required": ["ja", "en"],
+      "additionalProperties": false,
+      "properties": {
+        "ja": { "$ref": "#/$defs/materialModalText" },
+        "en": { "$ref": "#/$defs/materialModalText" }
+      }
+    },
+    "inquiryCopyByLocale": {
+      "type": "object",
+      "required": ["ja", "en"],
+      "additionalProperties": false,
+      "properties": {
+        "ja": { "$ref": "#/$defs/inquiryCopy" },
+        "en": { "$ref": "#/$defs/inquiryCopy" }
+      }
+    },
+    "locales": {
+      "type": "object",
+      "required": ["ja", "en"],
+      "additionalProperties": false,
+      "properties": {
+        "ja": { "$ref": "#/$defs/localeContent" },
+        "en": { "$ref": "#/$defs/localeContent" }
+      }
+    }
+  },
+  "$defs": {
+    "metricList": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["value", "label"],
+        "properties": {
+          "value": { "type": "string" },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "materialModalText": {
+      "type": "object",
+      "required": [
+        "lead",
+        "labelName",
+        "labelMail",
+        "labelCompany",
+        "placeholderName",
+        "placeholderMail",
+        "placeholderCompany",
+        "submit"
+      ],
+      "properties": {
+        "lead": { "type": "string" },
+        "labelName": { "type": "string" },
+        "labelMail": { "type": "string" },
+        "labelCompany": { "type": "string" },
+        "placeholderName": { "type": "string" },
+        "placeholderMail": { "type": "string" },
+        "placeholderCompany": { "type": "string" },
+        "submit": { "type": "string" }
+      }
+    },
+    "inquiryCopy": {
+      "type": "object",
+      "required": ["contactSuccess", "materialSuccess", "sendError"],
+      "properties": {
+        "contactSuccess": { "type": "string" },
+        "materialSuccess": { "type": "string" },
+        "sendError": { "type": "string" }
+      }
+    },
+    "newsItem": {
+      "type": "object",
+      "required": ["href", "image"],
+      "properties": {
+        "href": { "type": "string" },
+        "image": { "type": "string" }
+      }
+    },
+    "localeContent": {
+      "type": "object",
+      "required": [
+        "texts",
+        "images",
+        "brandLogo",
+        "newsAllHref",
+        "newsItems",
+        "coreMemberImages",
+        "advisorImages"
+      ],
+      "properties": {
+        "texts": {
+          "type": "array",
+          "minItems": 94,
+          "maxItems": 94,
+          "items": { "type": "string" }
+        },
+        "images": {
+          "type": "array",
+          "minItems": 40,
+          "maxItems": 40,
+          "items": { "type": "string" }
+        },
+        "brandLogo": { "type": "string" },
+        "newsAllHref": { "type": "string" },
+        "newsItems": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/newsItem" }
+        },
+        "coreMemberImages": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "items": { "type": "string" }
+        },
+        "advisorImages": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

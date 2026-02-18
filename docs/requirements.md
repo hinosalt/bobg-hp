@@ -11,13 +11,15 @@
 ## Functional Requirements
 ### Must
 - [x] `source/raw/` の元データ（SVG/FIG）を不変で保持する。
-- [x] 文字要素・画像要素を編集せず、そのまま利用する。
+- [x] 公開ページは要素引用ベースを維持しつつ、管理画面から text/image/url を編集できる。
 - [x] SVG丸ごと埋め込みは行わず、抽出済み要素を引用してHTMLコンポーネントで構成する。
 - [x] 引用要素数（94 text / 40 image）を維持する。
 - [x] JA/EN 2ページ（`/` と `/en/`）を用意する。
 - [x] 2層ヘッダー + セクション構造 + スクロールアニメーションを実装する。
 - [x] ブランドカラー `#17184B` を主軸にする。
 - [x] マニフェスト生成と整合性検証を自動化する。
+- [x] 管理画面（`/admin/`）を実装し、GitHub OAuth認証で編集可能にする。
+- [x] 保存はPRベース（下書き→承認公開）で反映する。
 
 ### Should
 - [x] ソースリンクを可視化し、参照導線を強化する。
@@ -36,6 +38,9 @@
 - [x] Given ローカル実行環境
   When `npm run test:e2e` を実行する
   Then JA/EN ページとマニフェスト配信が成功し、主要埋め込み参照が検証される。
+- [x] Given `content/site-content.json`
+  When `npm run validate:site-content` を実行する
+  Then JA/ENの text/image/url 構造が件数一致で検証される。
 - [x] Given ブラウザ表示
   When `/` と `/en/` を開く
   Then 2層ヘッダー、要素引用セクション、スクロールリビールが確認できる。

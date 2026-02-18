@@ -44,3 +44,10 @@ Checks: PASS
 - ヘッダーを `#17184B` 基調へ統一し、ロゴ枠を撤去。遷移メニューを同一ヘッダー行に統合し、可読性を保つ配色/フォーカスに再調整。
 - 資料請求モーダル表示中は画面全体に半透明オーバーレイを付与し、背景を軽く減光表示。
 - `問い合わせフォーム` / `資料請求モーダル` を必須入力化し、送信時に `formsubmit` 経由で `info@bobg.xyz` へ整形メール送信する実装を追加。
+- 公開用リポジトリ `hinosalt/bobg-hp` を作成し、`/Users/hinosorarto/Desktop/AI/bobg_hp_publish` から `main` へ初回pushを完了（Pages有効化APIはネットワーク制約で未実行）。
+- `content/site-content.json` を導入し、公開UIを「管理データ優先 + 既存定数フォールバック」で描画する構成へ移行。
+- `scripts/build_site_content.mjs` / `scripts/validate_site_content.mjs` / `content/schema/site-content.schema.json` を追加し、編集データの生成・検証フローを実装。
+- `admin/` に管理画面を追加（JA/EN同時編集、画像アップロード、URL編集、PR保存）。
+- `api/` に GitHub OAuth・セッション・コンテンツ取得・画像アップロード・PR作成APIを追加（Vercel Node Functions想定）。
+- `README.md` に GitHub + Vercel + OAuth の公開手順を追記し、CMS本番運用の手順を固定化。
+- `docs/decisions.md` に「依存ゼロCMS構成」の意思決定を追加し、運用制約と代替案を記録。

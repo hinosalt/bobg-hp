@@ -16,13 +16,15 @@ const main = async () => {
   const cssPath = path.join(projectRoot, "styles.css");
   const manifestPath = path.join(projectRoot, "source", "manifest", "source-manifest.json");
   const renderedContentPath = path.join(projectRoot, "source", "manifest", "bobg-rendered-content.json");
+  const siteContentPath = path.join(projectRoot, "content", "site-content.json");
 
-  const [jaHtml, enHtml, css, manifestRaw, contentRaw] = await Promise.all([
+  const [jaHtml, enHtml, css, manifestRaw, contentRaw, siteContentRaw] = await Promise.all([
     fs.readFile(jaPath, "utf8"),
     fs.readFile(enPath, "utf8"),
     fs.readFile(cssPath, "utf8"),
     fs.readFile(manifestPath, "utf8"),
     fs.readFile(renderedContentPath, "utf8"),
+    fs.readFile(siteContentPath, "utf8"),
   ]);
 
   assert(!jaHtml.includes("<object"), "JA page must not use object/svg embed");
@@ -50,7 +52,16 @@ const main = async () => {
   assert(content.images.length === 40, "rendered content image count mismatch");
   assert(jaHtml.includes("id=\"listing\""), "JA page missing separated listing section");
   assert(jaHtml.includes("id=\"news\""), "JA page missing news section");
-  assert((await fs.readFile(path.join(projectRoot, "script.js"), "utf8")).includes("source/quoted/en/before0.png"), "script.js missing EN quoted asset wiring");
+
+  const siteContent = JSON.parse(siteContentRaw);
+  assert(Array.isArray(siteContent.locales?.ja?.texts), "site-content JA texts missing");
+  assert(Array.isArray(siteContent.locales?.en?.texts), "site-content EN texts missing");
+  assert(siteContent.locales.ja.texts.length === 94, "site-content JA text count mismatch");
+  assert(siteContent.locales.en.texts.length === 94, "site-content EN text count mismatch");
+  assert(Array.isArray(siteContent.locales?.ja?.images), "site-content JA images missing");
+  assert(Array.isArray(siteContent.locales?.en?.images), "site-content EN images missing");
+  assert(siteContent.locales.ja.images.length === 40, "site-content JA image count mismatch");
+  assert(siteContent.locales.en.images.length === 40, "site-content EN image count mismatch");
 
   console.log("PASS: e2e smoke checks completed");
 };

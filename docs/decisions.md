@@ -53,3 +53,13 @@
 - Consequences:
   - `script.js` でロケール別マッピング管理が必要になる。
   - `source/quoted/en/` の静的引用画像を保守対象として追加する。
+
+## 2026-02-18 CMS stack without npm dependencies
+- Decision: 依存追加なしで `admin/` + `api/`（Vercel Node Functions）+ `content/site-content.json` を実装し、編集結果はPRベースで反映する。
+- Rationale: 現環境で `registry.npmjs.org` が解決不可のため、Next.jsや外部ライブラリ前提のCMSを即時導入できない。
+- Alternatives:
+  - ネットワーク復旧まで実装を停止
+  - ローカル専用の手編集運用を継続
+- Consequences:
+  - GitHub OAuth/allowlistを使った編集権限制御を維持しつつ、運用開始までのリードタイムを短縮できる。
+  - サーバーレス実行基盤（Vercel等）が必須となり、GitHub Pages単体ではCMS APIを実行できない。
