@@ -1,0 +1,14 @@
+{
+  "name": "bobg_hp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:manifest": "node scripts/build_manifest.mjs",
+    "test:integrity": "node scripts/check_integrity.mjs",
+    "test:e2e": "node scripts/test_e2e_smoke.mjs",
+    "fast-check": "bash scripts/fast_check.sh",
+    "check": "bash scripts/check.sh",
+    "dev": "python3 -m http.server 4173"
+  }
+}

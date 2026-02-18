@@ -1,0 +1,94 @@
+001: BOBG PTE. LTD. 読み込まれました
+002: 協業プロジェクト
+003: ニュース
+004: サービス
+005: メンバー
+006: お問い合わせ
+007: EN
+008: /
+009: JA
+010: 企業のトークン発行を、もっと簡単に。
+011: 企業のトークン発行・管理・運用から
+012: 暗号資産取引所への上場までを一気通貫でサポート
+013: 協業プロジェクト
+014: 株式会社エイチームエンターテインメント
+015: CryptoGames株式会社
+016: 株式会社ドリコム / チューリンガム株式会社
+017: double jump.tokyo株式会社 / 株式会社セガ
+018: double jump.tokyo株式会社
+019: extra mile株式会社（株式会社テレビ朝日ミュージック子会社） / CryptoGames株式会社
+020: 株式会社GALLUSYS / チューリンガム株式会社
+021: 株式会社gumi
+022: Highphen Pte. Ltd.
+023: 株式会社Kyuzan / 株式会社セガ
+024: MCH株式会社
+025: 株式会社YOAKE entertainment
+026: 上場実績（一部）
+027: ニュース
+028: 2025/10/29
+029: トークン発行支援のBOBG社、Kyuzan社と『甲虫王者ムシキング』IP活用のブロックチェーンゲーム『MUSHInomics with MUSHIKING』で協業
+030: 2025/03/13
+031: BOBG社、Soneiumと連携
+032: 2025/03/10
+033: トークン発行支援のBOBG社、CryptoGames社が運営する日本発のIPを活用したWeb3コンテンツを展開する分散型IPプラットフォーム「Xross Road」で協業
+034: View all
+035: サービス
+036: トークンの発行・管理・運用
+037: プロジェクトのスケジュールに合わせた柔軟なトークンの発行体制を構築。高いセキュリティや適切なガバナンス体制でトークンの安全な管理・運用を実現。
+038: 暗号資産取引所上場・流動性提供支援
+039: CEX (暗号資産取引所)やDEX (分散型取引所) への上場、流動性提供をサポートし、ローンチ時点からグローバル市場への展開が可能。
+040: バックオフィス体制構築支援
+041: プロジェクトに合わせたスキームを構築し、トークン発行におけるバックオフィス・コーポレートの諸問題を最小化。プロジェクトの価値創出に集中できるよう支援。
+042: コアメンバー
+043: Co-CEO
+044: Kengo Masuyama
+045: Co-CEO
+046: Hirokazu Kimizuka
+047: Sales Lead
+048: Akira Ishida
+049: Project Manager
+050: Sorato Hino
+051: Head of Tech
+052: Kazuya Fujimoto
+053: アドバイザー
+054: Haruo Narimoto
+055: 弁護士
+056: TMI総合法律事務所
+057: Partner
+058: Jun Meng Heng
+059: 弁護士
+060: Entra Law LLC
+061: Managing Director
+062: Kazuaki Mizuchi
+063: 公認会計士 / 税理士
+064: 水地一彰公認会計士事務所
+065: Naohito Tamaya
+066: Founder of
+067: - double jump.tokyo Inc.
+068: - Oasys Pte. Ltd.
+069: - Arriba Studio Pte. Ltd.
+070: - Animechain LLC
+071: Shun Ishikawa
+072: Startale Labs Pte. Ltd.
+073: Chief of Staff
+074: Astar Foundation COO
+075: Toshihito Wakao
+076: MCH Co.,Ltd CEO
+077: 投資家
+078: Arriba Studio Pte. Ltd.
+079: CryptoGames株式会社
+080: double jump.tokyo株式会社
+081: Startale Pte. Ltd.
+082: パートナー
+083: お問い合わせ
+084: 会社名
+085: *
+086: お名前
+087: *
+088: メールアドレス
+089: *
+090: お問い合わせ内容
+091: *
+092: 送信
+093: description
+094: 資料請求はこちら

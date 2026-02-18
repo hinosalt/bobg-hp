@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+agent_logs/*.log
+source/manifest/*.tmp.json
+artifacts/

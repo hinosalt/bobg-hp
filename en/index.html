@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOBG PTE. LTD. | EN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body data-locale="en" data-base="../" data-content-path="../source/manifest/bobg-rendered-content.json">
+  <div class="site-shell">
+    <header class="fr-header">
+      <div class="utility-row content-wrap">
+        <div class="utility-left">
+          <a class="brand-logo" href="#top" aria-label="top">
+            <img id="brandLogo" alt="" loading="eager" decoding="async" />
+          </a>
+          <p id="statusText" class="status-text"></p>
+        </div>
+        <div class="utility-right">
+          <nav id="headerNav" class="header-nav" aria-label="global">
+            <ul id="globalNav" class="global-nav"></ul>
+          </nav>
+          <div class="lang-switch" aria-label="language switch">
+            <a id="langSwitchLink" class="lang-jump" href="../">
+              <span id="langEn"></span>
+              <span id="langSlash"></span>
+              <span id="langJa"></span>
+            </a>
+          </div>
+          <button id="navToggle" class="nav-toggle" type="button" aria-label="toggle navigation" aria-controls="headerNav" aria-expanded="false">
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+            <span class="nav-toggle-bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="top" class="hero content-wrap reveal">
+        <div class="hero-copy">
+          <h1 id="heroTitle"></h1>
+          <p id="heroLeadA" class="hero-lead"></p>
+          <p id="heroLeadB" class="hero-lead strong"></p>
+          <div id="heroMetrics" class="hero-metrics" aria-label="token metrics"></div>
+        </div>
+      </section>
+
+      <section id="projects" class="section content-wrap reveal">
+        <div class="section-headline">
+          <h2 id="projectHeading"></h2>
+        </div>
+        <div id="projectGrid" class="project-grid"></div>
+      </section>
+
+      <section id="listing" class="section content-wrap reveal">
+        <div class="section-headline">
+          <h2 id="listingHeading"></h2>
+        </div>
+        <div id="listingGrid" class="listing-grid"></div>
+      </section>
+
+      <section id="news" class="section section-news reveal">
+        <div class="content-wrap">
+          <div class="section-headline compact">
+            <h2 id="newsHeading"></h2>
+          </div>
+          <div id="newsRail" class="news-rail"></div>
+          <div class="news-more-wrap">
+            <a id="newsMore" class="news-more" href="#" target="_blank" rel="noopener"></a>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section content-wrap reveal">
+        <div class="section-headline">
+          <h2 id="serviceHeading"></h2>
+        </div>
+        <div id="serviceCards" class="service-grid"></div>
+      </section>
+
+      <section id="members" class="section section-dark reveal">
+        <div class="content-wrap">
+          <div class="section-headline">
+            <h2 id="memberHeading"></h2>
+          </div>
+          <div id="coreMembers" class="people-grid"></div>
+
+          <div class="section-headline sub">
+            <h3 id="advisorHeading"></h3>
+          </div>
+          <div id="advisorList" class="advisor-list"></div>
+
+          <div class="section-headline sub">
+            <h3 id="investorHeading"></h3>
+          </div>
+          <div id="investorGrid" class="investor-grid"></div>
+
+          <div class="section-headline sub">
+            <h2 id="partnerHeading"></h2>
+          </div>
+          <div id="partnerGrid" class="partner-grid"></div>
+        </div>
+      </section>
+
+      <section id="contact" class="section content-wrap reveal">
+        <div class="section-headline">
+          <h2 id="contactHeading"></h2>
+        </div>
+        <form class="contact-form" action="#" method="post">
+          <label class="field">
+            <span class="field-label"><span id="labelCompany"></span><span id="requiredCompany" class="required"></span></span>
+            <input id="contactInputCompany" name="company" type="text" autocomplete="organization" required />
+          </label>
+          <label class="field">
+            <span class="field-label"><span id="labelName"></span><span id="requiredName" class="required"></span></span>
+            <input id="contactInputName" name="name" type="text" autocomplete="name" required />
+          </label>
+          <label class="field">
+            <span class="field-label"><span id="labelMail"></span><span id="requiredMail" class="required"></span></span>
+            <input id="contactInputMail" name="email" type="email" autocomplete="email" required />
+          </label>
+          <label class="field">
+            <span class="field-label"><span id="labelBody"></span><span id="requiredBody" class="required"></span></span>
+            <textarea id="contactInputBody" name="message" rows="4" required></textarea>
+          </label>
+          <button id="submitLabel" type="submit"></button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="fr-footer">
+      <div class="content-wrap footer-content">
+        <p id="footerIconText" class="footer-icon-text"></p>
+        <a id="materialLink" href="#" class="material-link"></a>
+      </div>
+    </footer>
+
+    <div id="materialModal" class="material-modal" aria-hidden="true" hidden>
+      <div class="material-modal-panel" role="dialog" aria-modal="true" aria-labelledby="materialModalLead">
+        <p id="materialModalLead" class="material-modal-lead"></p>
+        <form class="material-modal-form" action="#" method="post">
+          <label class="material-modal-field">
+            <span class="material-modal-label"><span id="materialModalLabelName"></span><span class="required">*</span></span>
+            <input id="materialModalInputName" name="name" type="text" autocomplete="name" required />
+          </label>
+          <label class="material-modal-field">
+            <span class="material-modal-label"><span id="materialModalLabelMail"></span><span class="required">*</span></span>
+            <input id="materialModalInputMail" name="email" type="email" autocomplete="email" required />
+          </label>
+          <label class="material-modal-field">
+            <span class="material-modal-label"><span id="materialModalLabelCompany"></span><span class="required">*</span></span>
+            <input id="materialModalInputCompany" name="company" type="text" autocomplete="organization" required />
+          </label>
+          <button id="materialModalSubmit" class="material-modal-submit" type="submit"></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script.js" type="module"></script>
+</body>
+</html>
