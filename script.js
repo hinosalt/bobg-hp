@@ -422,15 +422,15 @@ const SOURCE_ASSETS_BY_LOCALE = {
     newsItems: [
       {
         href: 'https://medium.com/@bobg_info/mushinomics-with-mushiking-349898a03c1a',
-        image: 'source/quoted/en/before0.png',
+        image: 'https://miro.medium.com/v2/resize:fit:4800/format:webp/1*6bxdqTnNFD75YXnAVqpmNQ.png',
       },
       {
         href: 'https://medium.com/@bobg_info/sgc-trading-on-multiple-cexs-and-dexs-62e50333ffb2',
-        image: 'source/quoted/en/before1.png',
+        image: 'https://miro.medium.com/v2/resize:fit:1400/format:webp/1*h78g04MfLux2wh-wF0ev2g.png',
       },
       {
         href: 'https://medium.com/@bobg_info/support-of-soneium-90bd8767e4f0',
-        image: 'source/quoted/en/before2.png',
+        image: 'https://miro.medium.com/v2/resize:fit:1400/format:webp/0*ecf5zlPj6fZb0Ofk',
       },
     ],
     coreMemberImages: [
