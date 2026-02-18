@@ -515,7 +515,11 @@ const TEXT_OVERRIDES = {
 };
 
 const resolveAssetUrl = (base, url) => {
+  if (url.startsWith('/')) return url;
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('source/') || url.startsWith('content/') || url.startsWith('api/')) {
+    return `/${url}`;
+  }
   return `${base}${url}`;
 };
 
@@ -595,6 +599,7 @@ const render = (baseTexts, baseImages, siteContent, locale, base) => {
   const usedText = new Set();
   const usedImage = new Set();
   const localeAssets = localeContent;
+  const defaultLocaleAssets = SOURCE_ASSETS_BY_LOCALE[locale] || SOURCE_ASSETS_BY_LOCALE.ja;
 
   const text = (idx) => texts[idx - 1] ?? '';
   const image = (idx) => images[idx - 1] ?? '';
@@ -714,9 +719,24 @@ const render = (baseTexts, baseImages, siteContent, locale, base) => {
   const newsMore = byId('newsMore');
 
   const newsCards = [
-    { date: useText(28), body: useText(29), ...localeAssets.newsItems[0] },
-    { date: useText(30), body: useText(31), ...localeAssets.newsItems[1] },
-    { date: useText(32), body: useText(33), ...localeAssets.newsItems[2] },
+    {
+      date: useText(28),
+      body: useText(29),
+      ...localeAssets.newsItems[0],
+      fallbackImage: defaultLocaleAssets.newsItems[0].image,
+    },
+    {
+      date: useText(30),
+      body: useText(31),
+      ...localeAssets.newsItems[1],
+      fallbackImage: defaultLocaleAssets.newsItems[1].image,
+    },
+    {
+      date: useText(32),
+      body: useText(33),
+      ...localeAssets.newsItems[2],
+      fallbackImage: defaultLocaleAssets.newsItems[2].image,
+    },
   ];
 
   newsCards.forEach((item) => {
@@ -730,7 +750,15 @@ const render = (baseTexts, baseImages, siteContent, locale, base) => {
     img.loading = 'lazy';
     img.decoding = 'async';
     img.alt = '';
-    img.src = resolveAssetUrl(base, item.image);
+    const primaryImage = resolveAssetUrl(base, item.image);
+    const fallbackImage = resolveAssetUrl(base, item.fallbackImage || item.image);
+    img.src = primaryImage;
+    if (fallbackImage !== primaryImage) {
+      img.onerror = () => {
+        img.onerror = null;
+        img.src = fallbackImage;
+      };
+    }
 
     const meta = create('div', 'news-meta');
     const date = create('p');
